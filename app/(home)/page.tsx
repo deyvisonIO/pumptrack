@@ -1,29 +1,17 @@
-"use client"
-import { envPublic } from "@/envPublic";
-import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { Header } from "@/components/header"
+import { createClient } from "@/utils/supabase/server";
+import Image from "next/image";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const {data, status} = useSession();
+export default async function Home() {
+  const supabase = createClient();
+  const {data, error} = await supabase.auth.getUser();
 
-  if(status === "loading") {
-    return (
-      <div>
-        Loading...
-      </div>
-    )
-  } 
-
-  if(status === "unauthenticated") {
-    redirect("/api/auth/signin")
-  }
+  if(error || !data?.user) return redirect("/login");
 
   return (
     <>
       <Header />
-      Home
     </>
-
   );
 }
