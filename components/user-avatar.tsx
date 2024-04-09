@@ -2,13 +2,13 @@
 import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { SignOut } from "@/actions/auth";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
 
 export function UserAvatar() {
-	const [avatar, fallback] = useUser();
+	const [avatar, fallback] = useAvatar();
 	const router = useRouter();
 
 	async function signOut() {
@@ -31,7 +31,7 @@ export function UserAvatar() {
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuLabel>Account</DropdownMenuLabel>
-					<DropdownMenuItem onClick={signOut} className="hover:bg-[#457b9d] hover:text-white font-medium">
+					<DropdownMenuItem onClick={signOut} className="hover:bg-[#457b9d] hover:text-white hover:cursor-pointer font-medium">
 						Sign Out
 					</DropdownMenuItem>
 				</DropdownMenuContent>
@@ -40,7 +40,7 @@ export function UserAvatar() {
 	)
 }
 
-function useUser() {
+function useAvatar() {
 	const [avatar, setAvatar] =  useState("");
 	const [fallback, setFallback] = useState("");
 	useEffect(() => {
@@ -56,3 +56,9 @@ function useUser() {
 
 	return [avatar, fallback]
 }
+
+export function AvatarSkeleton() {
+	return (
+		<Skeleton className="min-h-10 min-w-10 rounded-full"/>
+	)
+} 
