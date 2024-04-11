@@ -1,14 +1,16 @@
 import { Dumbbell } from "lucide-react";
 import { Search, SearchSkeleton } from "./search";
 import { AvatarSkeleton, UserAvatar } from "./user-avatar";
+import { UserDropDown } from "./user-dropdown";
 
 export async function Header() {
-
 	return (
 	<div className="flex justify-around items-center p-4 text-white bg-red-400">
 		<Dumbbell size={32} />
 		<Search />
-		<UserAvatar />
+		<UserDropDown>
+			<UserAvatar />
+		</UserDropDown>
 	</div>
 	)
 }
