@@ -1,8 +1,9 @@
+"use server"
 import { envPublic } from "@/envPublic";
 import { createServerClient, type CookieOptions } from "@supabase/ssr"
 import { cookies } from "next/headers"
 
-export function createClient() {
+export async function createClient() {
 	const cookieStore = cookies();
 	const opts = {
 		cookies: {

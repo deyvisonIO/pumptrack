@@ -2,9 +2,11 @@ import { createClient } from "@/utils/supabase/server";
 import {Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
+
 export async function UserAvatar() {
 	const supabase = await createClient();
 	const {data} = await supabase.auth.getUser();
+	console.log(data)
 	const avatar: string =  data?.user?.user_metadata.avatar_url;
 	const fallback: string = data?.user?.user_metadata.name.split(" ").reduce((acc: string, word: string) => acc + word[0],"");
 
