@@ -32,7 +32,7 @@ async function WorkoutWrapper() {
   return (
     <div>
       {data.map(item => (
-        <WorkoutItem key={item.id} name={item.name}/>
+        <WorkoutItem key={item.id} id={item.id} name={item.name}/>
       ))}
     </div>
   )
