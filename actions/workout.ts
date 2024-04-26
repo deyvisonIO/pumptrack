@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/utils/supabase/server"
+import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 
 export async function deleteWorkout(id: string) {
@@ -12,3 +13,21 @@ export async function deleteWorkout(id: string) {
 
   revalidatePath("/");
 }
+
+export async function createDefaultWorkout() {
+  const supabase = await createClient();
+  const {data, error} = await supabase.from("workouts")
+  .insert([
+    {name: `workout ${randomUUID()}`},
+    {name: `workout ${randomUUID()}`},
+    {name: `workout ${randomUUID()}`},
+    {name: `workout ${randomUUID()}`}
+  ])
+
+  console.log(data);
+  console.log(error);
+
+  revalidatePath("/");
+}
+
+

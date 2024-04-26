@@ -2,8 +2,10 @@ import { Header, HeaderSkeleton } from "@/components/header"
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { WorkoutItem } from "./components/workout-item";
 import Link from "next/link";
+import { Suspense } from "react";
+import { columns } from "./components/workouts/columns";
+import { DataTable } from "./components/workouts/data-table";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -27,14 +29,12 @@ async function WorkoutWrapper() {
   const supabase = await createClient();
   const { data }= await supabase.from("workouts").select(); 
 
-
   if(!data) return null;
+
   return (
-    <div>
-      {data.map(item => (
-        <WorkoutItem key={item.id} id={item.id} name={item.name}/>
-      ))}
-    </div>
+    <Suspense fallback={'Loading...'}>
+      <DataTable columns={columns} data={data}/> 
+    </Suspense>
   )
 }
 
