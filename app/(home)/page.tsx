@@ -13,15 +13,12 @@ export default async function Home() {
   if(!user) redirect("/login");
 
   return (
-    <div className="bg-slate-100 h-screen">
-      <Header />
-      <main className="flex flex-col justify-center mx-auto  gap-2 mt-8 w-8/12">
-        <Button asChild size="default" className="mr-4 bg-sky-500 font-medium w-20 self-end">
-          <Link href="/create">create</Link>
-        </Button>
-        <WorkoutWrapper />
-      </main>
-    </div>
+    <main className="flex flex-col justify-center mx-auto  gap-2 mt-8 w-8/12">
+      <Button asChild size="default" className="mr-4 bg-sky-500 font-medium w-20 self-end">
+        <Link href="/create">create</Link>
+      </Button>
+      <WorkoutWrapper />
+    </main>
   );
 }
 

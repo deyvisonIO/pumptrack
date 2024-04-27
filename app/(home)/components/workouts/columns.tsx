@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
  
 import { Button } from "@/components/ui/button"
 import {
@@ -25,16 +25,30 @@ export interface Workout {
   updatedAt: string,
 } 
 
-
-
 export const columns: ColumnDef<Workout>[] = [
   {
     accessorKey: "name",
-    header: "Name"
+    header: "Name",
+    cell: ({row}) => {
+      const workout = row.original;
+      return (
+        <Link href={`/${workout.id}`} className="hover:underline">{workout.name}</Link>
+      )
+    } 
   },
   {
     accessorKey: "updated_at",
-    header: "Updated",
+    header: ({column}) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
+          Updated
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ) 
+    },
     cell: ({row}) => {
       const updated = formatDistanceToNow(new Date(row.getValue("updated_at")));
 
@@ -43,7 +57,17 @@ export const columns: ColumnDef<Workout>[] = [
   },
   {
     accessorKey: "created_at",
-    header: "Created",
+    header: ({column}) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
+          Created 
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ) 
+    },
     cell: ({row}) => {
       const created = formatDistanceToNow(new Date(row.getValue("created_at")));
 
