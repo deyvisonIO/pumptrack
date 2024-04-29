@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { columns } from "./components/workouts/columns";
 import { DataTable } from "./components/workouts/data-table";
+import { WorkoutDialog } from "./components/workout-dialog";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -14,9 +15,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col justify-center mx-auto  gap-2 mt-8 w-8/12">
-      <Button asChild size="default" className="mr-4 bg-sky-500 font-medium w-20 self-end">
-        <Link href="/create">create</Link>
-      </Button>
+      <WorkoutDialog />
       <WorkoutWrapper />
     </main>
   );
