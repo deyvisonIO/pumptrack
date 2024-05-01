@@ -30,4 +30,20 @@ export async function createDefaultWorkout() {
   revalidatePath("/");
 }
 
+export async function createWorkout(formData: FormData) {
+  const name = formData.get("name");
 
+  if(!name) return;
+
+  const supabase = await createClient();
+  // { error: Error | null, data: Object[]}
+  const { data, error }= await supabase.from("workouts").insert({name}).select("name");
+
+
+  if(!data || error) throw new Error();
+
+  revalidatePath("/");
+
+  return name; 
+
+}
