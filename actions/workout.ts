@@ -39,10 +39,28 @@ export async function createWorkout(formData: FormData) {
   // { error: Error | null, data: Object[]}
   const { data, error }= await supabase.from("workouts").insert({name}).select("name");
 
-
-  if(!data || error) throw new Error();
+  if(!data || error) throw error; 
 
   revalidatePath("/");
+
+  return name; 
+
+}
+
+
+export async function changeWorkoutName(formData: FormData) {
+  const name = formData.get("name");
+  const id = formData.get("id");
+
+  if(!name) return;
+
+  const supabase = await createClient();
+  // { error: Error | null, data: Object[]}
+  const { data, error }= await supabase.from("workouts").update({name}).eq("id", id).select("name");
+
+  if(!data || error) throw error;
+
+  revalidatePath("/" + id);
 
   return name; 
 

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
-    <div className="bg-slate-100 h-screen">
+    <div className="bg-slate-200 h-screen">
       <Suspense fallback={<HeaderSkeleton />}>
         <Header />
       </Suspense>
