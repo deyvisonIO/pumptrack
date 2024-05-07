@@ -20,7 +20,7 @@ import Link from "next/link";
 export interface Workout {
   id: string,
   name: string,
-  data: string,
+  workout: string,
   createdAt: string,
   updatedAt: string,
 } 

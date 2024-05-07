@@ -1,38 +1,27 @@
 "use client"
 
-import { changeWorkoutName } from "@/actions/workout";
-import { Button } from "@/components/ui/button";
+import { createExercise } from "@/actions/workout";
+import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PencilLine } from "lucide-react";
-import { ElementRef, useRef, useTransition } from "react";
+import { useParams } from "next/navigation";
+import { ElementRef, useRef, useTransition } from "react"
 import { toast } from "sonner";
 
-export function WorkoutTitle({ id, title }: { id: string, title: string }) {
-	return (
-		<div className="flex justify-between items-center py-4 px-4 my-4 w-full bg-white rounded-lg">
-			<h1 className="font-bold text-xl">
-				{title}
-			</h1>
-			<WorkoutTitleDialog  id={id} title={title}/>
-		</div>
-	)
-}
-
-function WorkoutTitleDialog({ id, title }: { id: string, title: string}) {
+export function CreateExerciseBtn() {
+	const {id}= useParams<{id: string}>();
 	const [isPending, startTransition] = useTransition();
 	const closeRef = useRef<ElementRef<"button">>(null);
 
 	const formAction = (formData: FormData) => {
-		formData.set("id", id);
-
+		formData.set("id", id)
 		startTransition(() => {
-			toast.promise(changeWorkoutName(formData), {
+			toast.promise(createExercise(formData), {
 				loading: "loading...",
-				success: (name) => {
+				success: () => {
 					closeRef?.current?.click();
-					return `Changed name to "${name}"`
+					return "Workout created."
 				},
 				error: "Something went wrong...",
 			});
@@ -42,14 +31,12 @@ function WorkoutTitleDialog({ id, title }: { id: string, title: string}) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="secondary">
-					<PencilLine />
-				</Button>
+				<Button variant="outline" size="lg" className="w-8/12">Create exercise</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Edit Name</DialogTitle>
-					<DialogDescription>Edit the name of your workout.</DialogDescription>
+					<DialogTitle>Create Exercise</DialogTitle>
+					<DialogDescription>Write the exercise name to create it.</DialogDescription>
 				</DialogHeader>
 				<form action={formAction} className="flex flex-col gap-y-2">
 					<div>
@@ -58,7 +45,6 @@ function WorkoutTitleDialog({ id, title }: { id: string, title: string}) {
 							placeholder="Name"
 							className="focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:ring-transparent"
 							name="name"
-							defaultValue={title}	
 							required
 						/>
 					</div>
@@ -71,3 +57,4 @@ function WorkoutTitleDialog({ id, title }: { id: string, title: string}) {
 		</Dialog>
 	)
 }
+

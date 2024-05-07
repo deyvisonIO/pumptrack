@@ -47,6 +47,52 @@ export async function createWorkout(formData: FormData) {
 
 }
 
+interface Workout {
+  id: string,
+  user_id: string,
+  name: string,
+  workout: string,
+  created_at: string,
+  updated_at: string,
+}
+
+
+export async function createExercise(formData: FormData) {
+  const name = formData.get("name");
+  const id = formData.get("id");
+
+  if(!name) return;
+
+  const supabase = await createClient();
+  const { data } = await supabase.from("workouts").select("workout").eq("id", id);
+
+  if(!data) throw new Error();
+
+  const workout = data[0].workout;
+
+  workout.push({
+    name,
+    sets: [
+      {
+        reps: "",
+        weight: "",
+        intensity: "",
+        notes: "",
+      }
+    ] 
+  })
+
+
+
+  // { error: Error | null, data: Object[]}
+  const { error }= await supabase.from("workouts").update({ workout }).eq("id", id);
+
+  if(error) throw error; 
+
+  revalidatePath("/" + id);
+
+}
+
 
 export async function changeWorkoutName(formData: FormData) {
   const name = formData.get("name");
