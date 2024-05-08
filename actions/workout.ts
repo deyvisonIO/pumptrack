@@ -1,5 +1,6 @@
 "use server"
 
+import { Set } from "@/app/(home)/[id]/workout/exercise";
 import { createClient } from "@/utils/supabase/server"
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
@@ -110,4 +111,23 @@ export async function changeWorkoutName(formData: FormData) {
 
   return name; 
 
+}
+
+export async function updateExercise(id: string, indx: number,name: string, sets: Set[]){
+  const supabase = await createClient();
+  
+  const { data } = await supabase.from("workouts").select("workout").eq("id", id);
+
+  if(!data) throw new Error();
+
+  const workout = data[0].workout;
+
+  workout[indx].name = name;
+  workout[indx].sets = sets;
+  // { error: Error | null, data: Object[]}
+  const { error }= await supabase.from("workouts").update({ workout }).eq("id", id);
+
+  if(error) throw error;
+
+  revalidatePath("/" + id);
 }

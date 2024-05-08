@@ -31,7 +31,7 @@ export default async function Page({params}: { params: {id: string} }) {
   return (
     <div className="flex flex-col items-center w-8/12 mx-auto transition-all">
       <WorkoutTitle id={workout.id} title={workout.name}/>
-      {exercises.map((exercise, indx)=> <Exercise key={indx} name={exercise.name} sets={exercise.sets} />)}
+      {exercises.map((exercise, indx: number)=> <Exercise key={indx} indx={indx} name={exercise.name} sets={exercise.sets} />)}
       <CreateExerciseBtn />
     </div>
   )
