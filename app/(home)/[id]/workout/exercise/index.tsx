@@ -2,6 +2,7 @@
 import { updateExercise } from "@/actions/workout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CirclePlus, PencilLine } from "lucide-react";
 import { Jua } from "next/font/google";
 import { useParams } from "next/navigation";
@@ -109,6 +110,32 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 					<PencilLine />
 				</Button>
 			</div>
+			<Table >
+			  <TableHeader>
+				<TableRow className="font-semibold">
+				  <TableHead className="text-center w-32">Sets</TableHead>
+				  <TableHead className="text-center w-32">Reps</TableHead>
+				  <TableHead className="text-center w-32">Weight</TableHead>
+				  <TableHead className="text-center w-32">Intensity</TableHead>
+				  <TableHead className="text-center w-full">Notes</TableHead>
+				</TableRow>
+			  </TableHeader>
+			  <TableBody>
+				{sets.map((set, indx) => <Set key={indx} indx={indx} reps={set.reps} weight={set.weight} intensity={set.intensity} notes={set.notes} />)}
+			  </TableBody>
+			</Table>
+		</div>
+	)
+
+	return (
+
+		<div className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
+			<div className="flex justify-between items-center">
+				<h2 className="text-lg font-semibold">{name}</h2>
+				<Button className="hover:bg-gray-200" variant="ghost" onClick={toggleEdit}>
+					<PencilLine />
+				</Button>
+			</div>
 			<div className="flex flex-col gap-y-2">
 				<div className="flex text-center gap-x-4 font-semibold text-neutral-700">
 					<p className="w-32">Sets</p>
@@ -125,13 +152,13 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 
 function Set({ indx, reps, weight, intensity, notes }: IndexedSet) {
 	return (
-		<div className="flex items-center gap-x-4 text-center font-semibold h-10 text-neutral-500">
-			<p className="w-32 h-10 flex items-center justify-center">{indx + 1}</p>
-			<p className="w-32 h-10 flex items-center justify-center">{reps || 0}</p>
-			<p className="w-32 h-10 flex items-center justify-center">{weight || 0}</p>
-			<p className="w-32 h-10 flex items-center justify-center">{intensity || 0}</p>
-			<p className="w-full bg-neutral-200 bg-opacity-80  rounded-xl h-10 flex items-center justify-center">{notes}</p>
-		</div>
+		<TableRow className="font-semibold text-muted-foreground">
+		  <TableCell className="text-center">{indx + 1}</TableCell>
+		  <TableCell className="text-center">{reps || 0}</TableCell>
+		  <TableCell className="text-center">{weight || 0}</TableCell>
+		  <TableCell className="text-center">{intensity || 0}</TableCell>
+		  <TableCell className="text-center w-full">{notes}</TableCell>
+		</TableRow>
 	)
 }
 
@@ -140,11 +167,12 @@ interface FormSet extends IndexedSet {
 }
 
 function SetForm({ indx, reps, weight, intensity, notes, handleSetChange }: FormSet) {
+
 	return (
-		<div className="flex items-center gap-x-4 text-center font-semibold h-10 text-neutral-500">
+		<div className="flex items-center gap-x-4 text-center font-semibold h-10 shrink text-neutral-500">
 			<p className="w-32 h-10 flex items-center justify-center">{indx + 1}</p>
 			<Input
-				className="w-32 h-10 flex items-center justify-center"
+				className="max-w-32 h-10 flex items-center justify-center"
 				defaultValue={reps || 0}
 				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "reps", event.target.value)}
 			/>
@@ -161,6 +189,7 @@ function SetForm({ indx, reps, weight, intensity, notes, handleSetChange }: Form
 			<Input 
 				placeholder="Write some notes..." 
 				className="placeholder:text-neutral-400 text-neutral-800 w-full bg-neutral-200 bg-opacity-80  rounded-xl h-10 flex items-center justify-center"
+				type="text"
 				defaultValue={notes}
 				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "notes", event.target.value)}
 			/>

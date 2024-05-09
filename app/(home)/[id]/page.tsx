@@ -28,6 +28,7 @@ export default async function Page({params}: { params: {id: string} }) {
 
   const exercises = workout.workout;
 
+  console.log(exercises)
   return (
     <div className="flex flex-col items-center w-8/12 mx-auto transition-all">
       <WorkoutTitle id={workout.id} title={workout.name}/>
