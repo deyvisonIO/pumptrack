@@ -7,7 +7,7 @@ import Link from "next/link";
 export async function Header() {
 	return (
 	<div className="bg-red-400 text-white">
-		<header className="flex justify-between items-center mx-auto p-4 w-8/12">
+		<header className="flex justify-between items-center mx-auto p-4 w-full lg:w-8/12">
 			<Link href="/">
 				<Dumbbell size={32} />
 			</Link>

@@ -14,7 +14,7 @@ export default async function Home() {
   if(!user) redirect("/login");
 
   return (
-    <main className="flex flex-col justify-center mx-auto  gap-2 mt-8 w-8/12">
+    <main className="flex flex-col justify-center mx-auto gap-2 mt-8 transition-transform lg:w-8/12">
       <WorkoutDialog />
       <WorkoutWrapper />
     </main>

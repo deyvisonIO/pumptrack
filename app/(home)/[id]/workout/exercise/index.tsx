@@ -73,6 +73,38 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 
 
 	if (edit) {
+
+		return (
+			<form className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
+				<div className="flex justify-between items-center">
+					<h2 className="text-lg font-semibold">{name}</h2>
+					<Button className="hover:bg-gray-200" variant="ghost" onClick={toggleEdit}>
+						<PencilLine />
+					</Button>
+				</div>
+				<Table >
+				  <TableHeader>
+					<TableRow className="font-semibold">
+					  <TableHead className="text-center w-32">Sets</TableHead>
+					  <TableHead className="text-center w-32">Reps</TableHead>
+					  <TableHead className="text-center w-32">Weight</TableHead>
+					  <TableHead className="text-center w-32">Intensity</TableHead>
+					  <TableHead className="text-center w-full">Notes</TableHead>
+					</TableRow>
+				  </TableHeader>
+				  <TableBody>
+					{clientSets.map((set, indx) => <SetForm key={indx} indx={indx} reps={set.reps} weight={set.weight} intensity={set.intensity} notes={set.notes} handleSetChange={handleSetChange} />)}
+				  </TableBody>
+				</Table>
+				<div className="flex justify-between">
+					<Button onClick={addSet} type="button" className="flex items-center justify-start gap-x-1 hover:bg-gray-200" variant="ghost">
+						<CirclePlus />
+						<span className="text-base">Add Set</span>
+					</Button>
+					<Button type="submit">Submit</Button>
+				</div>
+			</form>
+		)
 		return (
 			<form onSubmit={formAction} className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
 				<div className="flex justify-between items-center">
@@ -126,28 +158,6 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 			</Table>
 		</div>
 	)
-
-	return (
-
-		<div className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
-			<div className="flex justify-between items-center">
-				<h2 className="text-lg font-semibold">{name}</h2>
-				<Button className="hover:bg-gray-200" variant="ghost" onClick={toggleEdit}>
-					<PencilLine />
-				</Button>
-			</div>
-			<div className="flex flex-col gap-y-2">
-				<div className="flex text-center gap-x-4 font-semibold text-neutral-700">
-					<p className="w-32">Sets</p>
-					<p className="w-32">Reps</p>
-					<p className="w-32">Weight</p>
-					<p className="w-32">Intensity</p>
-					<p className="w-full">notes</p>
-				</div>
-				{sets.map((set, indx) => <Set key={indx} indx={indx} reps={set.reps} weight={set.weight} intensity={set.intensity} notes={set.notes} />)}
-			</div>
-		</div>
-	)
 }
 
 function Set({ indx, reps, weight, intensity, notes }: IndexedSet) {
@@ -169,31 +179,39 @@ interface FormSet extends IndexedSet {
 function SetForm({ indx, reps, weight, intensity, notes, handleSetChange }: FormSet) {
 
 	return (
-		<div className="flex items-center gap-x-4 text-center font-semibold h-10 shrink text-neutral-500">
-			<p className="w-32 h-10 flex items-center justify-center">{indx + 1}</p>
-			<Input
-				className="max-w-32 h-10 flex items-center justify-center"
-				defaultValue={reps || 0}
-				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "reps", event.target.value)}
-			/>
-			<Input
-				className="w-32 h-10 flex items-center justify-center"
-				defaultValue={weight || 0}
-				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "weight", event.target.value)}
-			/>
-			<Input 
-				className="w-32 h-10 flex items-center justify-center" 
-				defaultValue={intensity || 0}
-				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "intensity", event.target.value)}
-			/>
-			<Input 
-				placeholder="Write some notes..." 
-				className="placeholder:text-neutral-400 text-neutral-800 w-full bg-neutral-200 bg-opacity-80  rounded-xl h-10 flex items-center justify-center"
-				type="text"
-				defaultValue={notes}
-				onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "notes", event.target.value)}
-			/>
-		</div>
+		<TableRow className="font-semibold text-muted-foreground">
+			<TableCell className="text-center">{indx + 1}</TableCell>
+			<TableCell className="text-center">
+				<Input
+					className="w-16 h-10 text-center flex items-center justify-center"
+					defaultValue={reps || 0}
+					onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "reps", event.target.value)}
+				/>
+			</TableCell>
+			<TableCell className="text-center">
+				<Input
+					className="w-16 h-10 text-center flex items-center justify-center"
+					defaultValue={weight || 0}
+					onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "weight", event.target.value)}
+				/>
+			</TableCell>
+			<TableCell className="text-center">
+				<Input 
+					className="w-16 h-10 text-center flex items-center justify-center" 
+					defaultValue={intensity || 0}
+					onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "intensity", event.target.value)}
+				/>
+			</TableCell>
+			<TableCell className="text-center w-full">
+				<Input 
+					placeholder="Write some notes..." 
+					className="min-w-40 placeholder:text-neutral-400 text-neutral-800 w-full bg-neutral-200 bg-opacity-80  rounded-xl h-10 flex items-center justify-center"
+					type="text"
+					defaultValue={notes}
+					onChange={(event: ChangeEvent<HTMLInputElement>) => handleSetChange(indx, "notes", event.target.value)}
+				/>
+			</TableCell>
+		</TableRow>
 	)
 }
 
