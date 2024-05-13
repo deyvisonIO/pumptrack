@@ -1,4 +1,3 @@
-import { Header, HeaderSkeleton } from "@/components/header"
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -15,7 +14,6 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col justify-center mx-auto gap-2 mt-8 transition-transform lg:w-8/12">
-      <WorkoutDialog />
       <WorkoutWrapper />
     </main>
   );

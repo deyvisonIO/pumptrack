@@ -73,11 +73,10 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 
 
 	if (edit) {
-
 		return (
-			<form className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
+			<form onSubmit={formAction}className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
 				<div className="flex justify-between items-center">
-					<h2 className="text-lg font-semibold">{name}</h2>
+					<Input className="text-lg font-semibold" value={clientName} onChange={handleNameChange} />
 					<Button className="hover:bg-gray-200" variant="ghost" onClick={toggleEdit}>
 						<PencilLine />
 					</Button>
@@ -96,33 +95,6 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 					{clientSets.map((set, indx) => <SetForm key={indx} indx={indx} reps={set.reps} weight={set.weight} intensity={set.intensity} notes={set.notes} handleSetChange={handleSetChange} />)}
 				  </TableBody>
 				</Table>
-				<div className="flex justify-between">
-					<Button onClick={addSet} type="button" className="flex items-center justify-start gap-x-1 hover:bg-gray-200" variant="ghost">
-						<CirclePlus />
-						<span className="text-base">Add Set</span>
-					</Button>
-					<Button type="submit">Submit</Button>
-				</div>
-			</form>
-		)
-		return (
-			<form onSubmit={formAction} className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
-				<div className="flex justify-between items-center">
-					<Input className="text-lg font-semibold w-min" defaultValue={clientName} onChange={handleNameChange} />
-					<Button variant="default" onClick={toggleEdit}>
-						<PencilLine />
-					</Button>
-				</div>
-				<div className="flex flex-col gap-y-2">
-					<div className="flex text-center gap-x-4 font-semibold text-neutral-700">
-						<p className="w-32">Sets</p>
-						<p className="w-32">Reps</p>
-						<p className="w-32">Weight</p>
-						<p className="w-32">Intensity</p>
-						<p className="w-full">notes</p>
-					</div>
-					{clientSets.map((set, indx) => <SetForm key={indx} indx={indx} reps={set.reps} weight={set.weight} intensity={set.intensity} notes={set.notes} handleSetChange={handleSetChange} />)}
-				</div>
 				<div className="flex justify-between">
 					<Button onClick={addSet} type="button" className="flex items-center justify-start gap-x-1 hover:bg-gray-200" variant="ghost">
 						<CirclePlus />
