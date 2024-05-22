@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PumpTrack
 
-## Getting Started
+A minimatistic gym logger for those who want more simplicity and flexibility when logging their workouts.
 
-First, run the development server:
+## Why?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project was created because I(DeyvisonIO) wanted a simple way to log my workouts without having to go through a list of 500 workouts only to find the exercise that I’m doing is not on that list. I wanted to created a gym logger that had more flexibility, where you’d put whatever workout and method of progressive overload you wanted, while having a little bit of a structure so you can easily see and edit the different sets, reps and weight.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Supabase database to store your workouts
+- List of created workouts sorted by date
+- Flexibility adding a workout
+- Ability to put notes for every set
+- Ability to add new sets
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Pictures
 
-## Learn More
+![Home Page](pictures/home.png)
 
-To learn more about Next.js, take a look at the following resources:
+![Workout Page](pictures/workout.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Here are a list of possible improvements:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Ability to create a new workout/exercise using a previous one as a template
+- Ability to export your workout to google sheets
