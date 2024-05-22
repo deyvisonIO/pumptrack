@@ -9,8 +9,8 @@ import { WorkoutDialog } from "./components/workout-dialog";
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data:user } = await supabase.auth.getUser();
-  if(!user) redirect("/login");
+  const { data:user, error } = await supabase.auth.getUser();
+  if(!user || error) redirect("/login");
 
   return (
     <main className="flex flex-col justify-center mx-auto gap-2 mt-8 transition-transform lg:w-8/12">

@@ -74,7 +74,7 @@ export function Exercise({ indx, name, sets }: ExerciseProps) {
 
 	if (edit) {
 		return (
-			<form onSubmit={formAction}className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
+			<form onSubmit={formAction} className="flex flex-col p-4 w-full bg-white rounded-lg my-4 gap-y-4">
 				<div className="flex justify-between items-center">
 					<Input className="text-lg font-semibold" value={clientName} onChange={handleNameChange} />
 					<Button className="hover:bg-gray-200" variant="ghost" onClick={toggleEdit}>
